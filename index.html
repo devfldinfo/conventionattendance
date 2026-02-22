@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSA Conventions</title>
+
+  <style>
+    :root {
+      --bg: #f1f3f4;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --line: #dadce0;
+      --focus: #1a73e8;
+      --required: #d93025;
+      --accent: #673ab7;
+      /* Google Forms purple */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 15;
+      background: var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ===== Layout ===== */
+
+    .form-body,
+    .card {
+      max-width: 640px;
+      margin: 24px auto;
+      background: var(--card);
+      padding: 24px 20px 32px;
+      /* reduced side padding */
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* ===== Header ===== */
+
+    .header-bar {
+      height: 12px;
+      background: var(--accent);
+      border-radius: 8px 8px 0 0;
+      margin: -24px -20px 24px -20px;
+
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 500;
+      padding: 10px 10px 10px;
+      margin: 0 0 8px 0;
+      text-align: center;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 6px 0;
+      text-align: center;
+    }
+
+    .required-note {
+      font-size: 13px;
+      color: var(--required);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 24px 0;
+    }
+
+    /* ===== Questions ===== */
+
+    .question {
+      margin-bottom: 32px;
+    }
+
+    .label {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .required {
+      color: var(--required);
+      margin-left: 4px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ===== Inputs ===== */
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 12px;
+      font-size: 15px;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: var(--focus);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    }
+
+    /* ===== Options ===== */
+
+    .option {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    .option input {
+      margin-right: 10px;
+      accent-color: var(--accent);
+    }
+
+    /* ===== Buttons ===== */
+
+    button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin-top: 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #5e35b1;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* ===== Review Page ===== */
+
+    #reviewView h2 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+    }
+
+    .row strong {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .row span {
+      font-weight: 500;
+    }
+
+    /* ===== Errors ===== */
+
+    .error {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--required);
+    }
+
+    .question.invalid input {
+      border-color: var(--required);
+    }
+
+    /* ===== Confirmation ===== */
+
+    #confirmView .content {
+      text-align: center;
+    }
+
+    #confirmView h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    #confirmView p {
+      font-size: 15px;
+      margin: 10px 0;
+    }
+
+    /* ===== Mobile Optimization ===== */
+
+    @media (max-width: 600px) {
+      .form-body {
+        padding: 20px 16px 30px;
+      }
+
+      .form-body,
+      .card {
+        border-radius: 0;
+        box-shadow: none;
+        max-width: 100%;
+      }
+
+      .header-bar {
+        border-radius: 0;
+        margin: -24px 0 24px 0;
+
+      }
+
+      .header h1 {
+        font-size: 26px;
+      }
+
+      .label {
+        font-size: 18px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"] {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 12px;
+        font-size: 20px;
+        /* was 15px */
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+        background: #fff;
+      }
+
+      .option {
+        font-size: 18px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 20px;
+      }
+
+      .row {
+        display: block;
+        padding: 14px 0;
+      }
+
+      .row strong {
+        display: block;
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+
+      .row span {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text);
+      }
+    }
+
+
+    .appVersion {
+      text-align: right;
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      font-size: 12px;
+      color: #888;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <p class="appVersion">Version 2.7</p>
+
+  <!-- FORM -->
+  <main id="formView">
+    <div class="header-bar"></div>
+
+    <div class="header">
+      <h1 id="mainTitle">RSA Conventions</h1>
+      <p>Please submit a form for each individual that will attend convention.</p>
+      <p><br>If you wish to attend more than one convention, please fill in an additional form.</p>
+    </div>
+
+    <div class="required-note">
+      * Indicates required question
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content form-body">
+
+      <div class="question" id="q-surname">
+        <div class="label">Surname<span class="required">*</span></div>
+        <input id="surname" type="text" placeholder="Type your surname here">
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-name">
+        <div class="label">Name<span class="required">*</span></div>
+        <input id="name" type="text" placeholder="Type your name here">
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question">
+        <div class="label">Age</div>
+        <input id="age" type="text" placeholder="Type your age here">
+      </div>
+
+      <!-- YES / NO -->
+      <div class="question" id="q-sleep">
+        <div class="label">Sleep on grounds?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="sleep" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="sleep" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question">
+        <div class="label">Using a caravan/tent?</div>
+        <label class="option"><input type="radio" name="caravan" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="caravan" value="No"> No</label>
+      </div>
+
+      <!-- DAYS -->
+      <div class="question" id="q-thu">
+        <div class="label">Attending Thursday?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="thu" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="thu" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-fri">
+        <div class="label">Attending Friday?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="fri" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="fri" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-sat">
+        <div class="label">Attending Saturday?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="sat" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="sat" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-sun">
+        <div class="label">Attending Sunday?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="sun" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="sun" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-list">
+        <div class="label">Name on working list?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="list" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="list" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question">
+        <div class="label">Job preferance</div>
+        <input id="jobPreference" type="text" placeholder="Leave blank if not applicable">
+      </div>
+
+      <div class="question" id="q-prep">
+        <div class="label">Help on Big preps day?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="prep" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="prep" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-gender">
+        <div class="label">Gender<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="gender" value="Male"> Male</label>
+        <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-meals">
+        <div class="label">Staying for evening meals?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="meals" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="meals" value="No"> No</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <!-- CONVENTION -->
+      <div class="question" id="q-convention">
+        <div class="label">Which convention will you attend?<span class="required">*</span></div>
+        <label class="option"><input type="radio" name="convention" value="Namibia"> Namibia (6-7 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Gqeberha">Gqeberha (4-7 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Cape #1"> Cape #1 (4-7 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Cape #2">Cape #2 (11-14 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Durban">Durban (11-14 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Pretoria #1"> Pretoria #1 (18-21 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Pretoria #2"> Pretoria #2 (25-28 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Bloemfontein">Bloemfontein (25-28 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Pretoria Zulu">Pretoria Zulu (9-11 Jan)</label>
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question">
+        <div class="label">Special requests</div>
+        <input id="specialRequests" type="text" placeholder="Leave blank if not applicable">
+      </div>
+
+      <div class="question" id="q-meeting">
+        <div class="label">Your meeting name?<span class="required">*</span></div>
+        <input id="meetingName" type="text" placeholder="eg. Bethanie">
+        <div class="error hidden"></div>
+      </div>
+
+      <div class="question" id="q-email">
+        <div class="label">Email address<span class="required">*</span></div>
+        <input id="email" type="email" placeholder="Type your email address here">
+        <div class="error hidden"></div>
+      </div>
+
+      <button type="button" onclick="goToReview()">Review</button>
+
+    </div>
+
+  </main>
+
+  <!-- REVIEW -->
+  <main id="reviewView" class="card hidden">
+    <div class="content">
+      <h2>Review your attendance information</h2>
+      <div id="reviewContent"></div>
+
+      <button id="backBtn" type="button" onclick="goBack()">Back</button>
+      <button id="submitBtn" type="button" onclick="submitForm()">Submit</button>
+    </div>
+  </main>
+
+  <!-- CONFIRMATION -->
+  <main id="confirmView" class="card hidden">
+    <div class="content">
+      <h2>Submission successful</h2>
+      <p>Your registration has been submitted.</p>
+      <p>You will receive a confirmation email in the next 24 hours. Please notify the responsible brother if you do not
+        receive any confirmation email.</p>
+      <p>If you find that you have made a mistake while filling in your attendance form or if you would like to change
+        any of the information or if you will not be attending anymore, please notify the responsible brother. (See
+        contact details below)</p>
+      <p>Thank you.</p>
+
+      <button type="button" onclick="startNewForm()">
+     Submit another form
+   </button>
+
+      <div id="responsibleContact" style="margin-top:25px;"></div>
+
+    </div>
+  </main>
+
+<script>
+  const VALIDATION_ENABLED = true; // ← set to true when ready
+  const el = id => document.getElementById(id);
+  const yn = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+
+  let data = {};
+
+function showResponsibleBrothers() {
+  const container = el("responsibleContact");
+
+  container.innerHTML = `
+    <div class="responsible-box">
+      <h3>Responsible Brothers</h3>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Gqeberha</strong></p>
+        <p>Julian van Wyk</p>
+        <p>
+          📞 <a href="tel:+27723627604">+27 72 362 7604</a><br>
+          ✉️ <a href="mailto:julianvanwyk@gmail.com">julianvanwyk@gmail.com</a>
+        </p>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Namibia</strong></p>
+        <p>Deon van Heerden</p>
+        <p>
+          📞 <a href="tel:+27769458969">+27 76 945 8969</a><br>
+          ✉️ <a href="mailto:deonvanheerden2@gmail.com">deonvanheerden2@gmail.com</a>
+        </p>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Cape #1 & #2</strong></p>
+        <p>Marius Marais</p>
+        <p>
+          📞 <a href="tel:+27834454457">+27 83 445 4457</a><br>
+          ✉️ <a href="mailto:mariusmarais2008@gmail.com">mariusmarais2008@gmail.com</a>
+        </p>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Durban</strong></p>
+        <p>Barry Vercueil</p>
+        <p>
+          📞 <a href="tel:+27825583544">+27 82 558 3544</a><br>
+          ✉️ <a href="mailto:bvercueil@gmail.com">bvercueil@gmail.com</a>
+        </p>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Bloemfontein</strong></p>
+        <p>Hannes Marais</p>
+        <p>
+          📞 <a href="tel:+27832257703">+27 83 225 7703</a><br>
+          ✉️ <a href="mailto:hannes.marais2007@gmail.com">hannes.marais2007@gmail.com</a>
+        </p>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <p><strong>Pretoria #1 & #2</strong></p>
+        <p>Andre de Bruyn</p>
+        <p>
+          📞 <a href="tel:+27828280238">+27 82 828 0238</a><br>
+          ✉️ <a href="mailto:andredebruyn@gmail.com">andredebruyn@gmail.com</a>
+        </p>
+      </div>
+
+      <div>
+        <p><strong>Pretoria Zulu</strong></p>
+        <p>Dickson Zivambiso</p>
+        <p>
+          📞 <a href="tel:+263773290895">+263 77 329 0895</a><br>
+          ✉️ <a href="mailto:dzivambiso@gmail.com">dzivambiso@gmail.com</a>
+        </p>
+      </div>
+
+    </div>
+  `;
+}
+
+function cleanSpaces(value) {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+function formatProperName(value) {
+  if (!value) return '';
+  value = cleanSpaces(value.toLowerCase());
+
+  const lowerWords = ['van', 'der', 'de', 'du', 'le', 'la', 'von'];
+
+  return value.split(' ').map((word, index) => {
+
+    // Handle apostrophes (O'Connor)
+    if (word.includes("'")) {
+      return word
+        .split("'")
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join("'");
+    }
+
+    // Handle McDonald
+    if (word.startsWith('mc') && word.length > 2) {
+      return 'Mc' + word.charAt(2).toUpperCase() + word.slice(3);
+    }
+
+    // Keep certain words lowercase (unless first word)
+    if (index !== 0 && lowerWords.includes(word)) {
+      return word;
+    }
+
+    return word.charAt(0).toUpperCase() + word.slice(1);
+
+  }).join(' ');
+}
+
+function formatSentenceCase(value) {
+  if (!value) return '';
+  value = cleanSpaces(value.toLowerCase());
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function showError(id, message) {
+ const q = el(id);
+ const err = q.querySelector('.error');
+
+ q.classList.add('invalid');
+ err.textContent = message;
+ err.classList.remove('hidden');
+}
+
+function clearErrors() {
+ document.querySelectorAll('.question').forEach(q => {
+   q.classList.remove('invalid');
+   const err = q.querySelector('.error');
+   if (err) {
+     err.classList.add('hidden');
+     err.textContent = '';
+   }
+ });
+}
+
+function scrollToFirstError() {
+ const first = document.querySelector('.question.invalid');
+ if (first) {
+   first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+ }
+}
+
+ function goToReview() {
+if (!VALIDATION_ENABLED) {
+   buildReviewData();
+   return;
+ }
+
+clearErrors();
+let hasError = false;
+
+if (!el('surname').value.trim()) {
+ showError('q-surname', 'This is a required question');
+ hasError = true;
+}
+
+const nameValue = el('name').value.trim();
+
+if (!nameValue) {
+  showError('q-name', 'This is a required question');
+  hasError = true;
+} else if (nameValue.includes(' ')) {
+  showError('q-name', 'Please enter only one first name');
+  hasError = true;
+}
+
+if (!yn('sleep')) {
+ showError('q-sleep', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('thu')) {
+ showError('q-thu', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('fri')) {
+ showError('q-fri', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('sat')) {
+ showError('q-sat', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('sun')) {
+ showError('q-sun', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('list')) {
+ showError('q-list', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('prep')) {
+ showError('q-prep', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('gender')) {
+ showError('q-gender', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('meals')) {
+ showError('q-meals', 'This is a required question');
+ hasError = true;
+}
+
+if (!yn('convention')) {
+ showError('q-convention', 'Please select one option');
+ hasError = true;
+}
+
+if (!el('meetingName').value.trim()) {
+ showError('q-meeting', 'This is a required question');
+ hasError = true;
+}
+
+if (!el('email').value.trim()) {
+ showError('q-email', 'This is a required question');
+ hasError = true;
+}
+
+const email = el('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showError('q-email','Enter a valid email');
+    hasError = true;
+  }
+
+if (hasError) {
+ scrollToFirstError();
+ return;
+}
+
+/*   data = {
+  Surname: formatProperName(el('surname').value),
+  Name: formatProperName(el('name').value),
+  Age: el('age').value.trim(),
+  'Sleeping on grounds': yn('sleep'),
+  'Using a caravan': yn('caravan'),
+  'Attending Thursday': yn('thu'),
+  'Attending Friday': yn('fri'),
+  'Attending Saturday': yn('sat'),
+  'Attending Sunday': yn('sun'),
+  'Name on working list': yn('list'),
+  'Job preferance': formatSentenceCase(el('jobPreference').value),
+  'Saturday preps help': yn('prep'),
+  Gender: yn('gender'),
+  'Staying for evening meals': yn('meals'),
+  Convention: yn('convention'),
+  'Special requests': formatSentenceCase(el('specialRequests').value),
+  Meeting: formatProperName(el('meetingName').value),
+  Email: el('email').value.trim()   // untouched
+};
+
+   el('reviewContent').innerHTML = Object.entries(data)
+     .map(([k,v]) => `<div class="row"><strong>${k}</strong><span>${v || '-'}</span></div>`)
+     .join('');
+
+  show('reviewView');*/
+  buildReviewData();
+}
+
+function buildReviewData() {
+   data = {
+  Surname: formatProperName(el('surname').value),
+  Name: formatProperName(el('name').value),
+  Age: el('age').value.trim(),
+  'Sleeping on grounds': yn('sleep'),
+  'Using a caravan': yn('caravan'),
+  'Attending Thursday': yn('thu'),
+  'Attending Friday': yn('fri'),
+  'Attending Saturday': yn('sat'),
+  'Attending Sunday': yn('sun'),
+  'Name on working list': yn('list'),
+  'Job preferance': formatSentenceCase(el('jobPreference').value),
+  'Saturday preps help': yn('prep'),
+  Gender: yn('gender'),
+  'Staying for evening meals': yn('meals'),
+  Convention: yn('convention'),
+  'Special requests': formatSentenceCase(el('specialRequests').value),
+  Meeting: formatProperName(el('meetingName').value),
+  Email: el('email').value.trim()   // untouched
+};
+
+   el('reviewContent').innerHTML = Object.entries(data)
+     .map(([k,v]) => `<div class="row"><strong>${k}</strong><span>${v || '-'}</span></div>`)
+     .join('');
+
+  show('reviewView');
+}
+
+ function goBack() {
+show('formView');
+ }
+
+function submitForm() {
+ const btn = el('submitBtn');
+ const btn2 = el('backBtn');
+ 
+ const email = data.email;
+
+
+ btn.disabled = true;
+ btn2.disabled = true;
+
+ google.script.run
+   .withSuccessHandler(() => {
+     btn.disabled = false;
+     btn2.disabled = false;
+     show('confirmView');
+     showResponsibleBrothers();
+   })
+   .withFailureHandler(err => {
+     btn.disabled = false;
+     btn2.disabled = false;
+     alert(err.message);
+   })
+   .submitData(data);
+}
+
+ function show(view) {
+   ['formView', 'reviewView', 'confirmView'].forEach(id =>
+     el(id).classList.add('hidden')
+   );
+   el(view).classList.remove('hidden');
+
+   window.scrollTo({ top: 0, behavior: 'smooth' });
+   
+ }
+
+function startNewForm() {
+  const savedEmail = el('email').value;
+  const savedSurname = el('surname').value;
+  const savedSleep = yn('sleep');
+  const savedCaravan = yn('caravan');
+  const savedThu = yn('thu');
+  const savedFri = yn('fri');
+  const savedSat = yn('sat');
+  const savedSun = yn('sun');
+  const savedMeals = yn('meals');
+  const savedConvention = yn('convention');
+  const savedMeeting = el('meetingName').value;
+  
+
+  clearAllInputs();
+ data = {};
+  el('email').value = savedEmail; 
+  el('meetingName').value = savedMeeting; 
+  el('surname').value = savedSurname; 
+
+if (savedSleep)
+    document.querySelector(`input[name="sleep"][value="${savedSleep}"]`).checked = true;
+
+  if (savedCaravan)
+    document.querySelector(`input[name="caravan"][value="${savedCaravan}"]`).checked = true;
+
+  if (savedThu)
+    document.querySelector(`input[name="thu"][value="${savedThu}"]`).checked = true;
+
+  if (savedFri)
+    document.querySelector(`input[name="fri"][value="${savedFri}"]`).checked = true;
+
+  if (savedSat)
+    document.querySelector(`input[name="sat"][value="${savedSat}"]`).checked = true;
+
+  if (savedSun)
+    document.querySelector(`input[name="sun"][value="${savedSun}"]`).checked = true;
+
+  if (savedSleep)
+    document.querySelector(`input[name="sleep"][value="${savedSleep}"]`).checked = true;
+
+  if (savedMeals)
+    document.querySelector(`input[name="meals"][value="${savedMeals}"]`).checked = true;
+
+  if (savedConvention)
+    document.querySelector(`input[name="convention"][value="${savedConvention}"]`).checked = true;
+
+ show('formView');
+ el('surname').focus();
+}
+
+function clearAllInputs() {
+ document.querySelectorAll('input').forEach(input => {
+   if (input.type === 'radio') input.checked = false;
+   else input.value = '';
+ });
+}
+
+window.onload = () => {
+ const year = new Date().getFullYear();
+ el('mainTitle').textContent = `${year} RSA Conventions`;
+ el('surname').focus();
+};
+
+
+  </script>
+
+</body>
+
+</html>
