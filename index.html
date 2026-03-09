@@ -24,7 +24,7 @@
     }
 
     body {
-      margin: 15;
+      margin: 15px;
       background: var(--bg);
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
@@ -308,7 +308,7 @@
 </head>
 
 <body>
-  <p class="appVersion">Version 2.7</p>
+  <p class="appVersion">Version 3.4</p>
 
   <!-- FORM -->
   <main id="formView">
@@ -760,7 +760,7 @@ if (hasError) {
      .map(([k,v]) => `<div class="row"><strong>${k}</strong><span>${v || '-'}</span></div>`)
      .join('');
 
-  show('reviewView');*/
+  //show('reviewView');*/
   buildReviewData();
 }
 
@@ -807,16 +807,29 @@ function submitForm() {
  btn.disabled = true;
  btn2.disabled = true;
 
+// history.pushState(null, null, location.href);
+  //window.onpopstate = function () {
+    //history.go(1);
+  //};
+
  google.script.run
    .withSuccessHandler(() => {
      btn.disabled = false;
      btn2.disabled = false;
+
+     //history.replaceState({ view: 'confirmView' }, '');
+
+
      show('confirmView');
      showResponsibleBrothers();
    })
    .withFailureHandler(err => {
      btn.disabled = false;
      btn2.disabled = false;
+
+    //window.onpopstate = null;
+
+
      alert(err.message);
    })
    .submitData(data);
@@ -827,6 +840,20 @@ function submitForm() {
      el(id).classList.add('hidden')
    );
    el(view).classList.remove('hidden');
+
+   //history.pushState({ view: view }, '');
+
+  // history.pushState(null, null, location.href);
+  //window.onpopstate = function () {
+    //history.go(1);
+  //};
+
+//if (replace) {
+  //  history.replaceState({ view: view }, '');
+  //} else {
+   // history.pushState({ view: view }, '');
+ // }
+
 
    window.scrollTo({ top: 0, behavior: 'smooth' });
    
@@ -894,8 +921,41 @@ window.onload = () => {
  const year = new Date().getFullYear();
  el('mainTitle').textContent = `${year} RSA Conventions`;
  el('surname').focus();
-};
 
+// Lock the page in history
+  /*history.replaceState({ noBack: true }, '');
+  history.pushState({ noBack: true }, '');
+
+  window.addEventListener('popstate', function (event) {
+    if (event.state && event.state.noBack) {
+      history.pushState({ noBack: true }, '');
+    }
+  });
+
+*/
+
+//history.pushState(null, null, location.href);
+  //window.addEventListener('popstate', function () {
+    //history.pushState(null, null, location.href);
+  //});
+//history.pushState(null, null, location.href);
+  //window.onpopstate = function () {
+    //history.go(1);
+  //};
+
+ //history.replaceState({ view: 'formView' }, '');
+//};
+/*
+window.addEventListener('popstate', function (event) {
+  if (event.state && event.state.view) {
+    ['formView', 'reviewView', 'confirmView'].forEach(id =>
+      el(id).classList.add('hidden')
+    );
+
+    el(event.state.view).classList.remove('hidden');
+    window.scrollTo({ top: 0 });
+  }*/
+};
 
   </script>
 
