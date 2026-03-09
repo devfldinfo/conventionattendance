@@ -1,4 +1,3 @@
-
 const SHEET_ID = '1OukBzLWlDurzU5uvrEmaNXpwBoIc9jbR6RmeIg2M2TI';
 const SHEET_NAME = 'Feedback';
 
@@ -14,7 +13,6 @@ function stressTest() {
   }
 }
 
-
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('index')
     .setTitle('Convention Registration').addMetaTag('viewport', 'width=device-width, initial-scale=1');
@@ -26,30 +24,30 @@ function submitData(data) {
 
   try {
 
-  const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = ss.getSheetByName(SHEET_NAME);
 
-  sheet.appendRow([
-    new Date(),
-    data['Surname'] || '',
-    data['Name'] || '',
-    data['Age'] || '',
-    data['Sleeping on grounds'] || '',
-    data['Using a caravan'] || '',
-    data['Attending Thursday'] || '',
-    data['Attending Friday'] || '',
-    data['Attending Saturday'] || '',
-    data['Attending Sunday'] || '',
-    data['Name on working list'] || '',
-    data['Job preferance'] || '',
-    data['Saturday preps help'] || '',
-    data['Gender'] || '',
-    data['Staying for evening meals'] || '',
-    data['Convention'] || '',
-    data['Special requests'] || '',
-    data['Meeting'] || '',
-    data['Email'] || ''
-  ]);
+    sheet.appendRow([
+      new Date(),
+      data['Surname'] || '',
+      data['Name'] || '',
+      data['Age'] || '',
+      data['Sleeping on grounds'] || '',
+      data['Using a caravan'] || '',
+      data['Attending Thursday'] || '',
+      data['Attending Friday'] || '',
+      data['Attending Saturday'] || '',
+      data['Attending Sunday'] || '',
+      data['Name on working list'] || '',
+      data['Job preferance'] || '',
+      data['Saturday preps help'] || '',
+      data['Gender'] || '',
+      data['Staying for evening meals'] || '',
+      data['Convention'] || '',
+      data['Special requests'] || '',
+      data['Meeting'] || '',
+      data['Email'] || ''
+    ]);
 
   } finally {
     lock.releaseLock();
@@ -79,7 +77,7 @@ function buildEmail(d) {
      <td style="padding:8px;border-bottom:1px solid #ddd;"><strong>${esc(label)}</strong></td>
      <td style="padding:8px;border-bottom:1px solid #ddd;">${value}</td>
     </tr>`;
-   
+
   return `
   <div style="text-align:center; font-family: Arial, sans-serif;">
     <table align="center" style="border-collapse:collapse;width:100%;max-width:600px;margin:auto;">
@@ -125,32 +123,32 @@ function buildEmail(d) {
      ✉️ <a href="mailto:julianvanwyk@gmail.com">julianvanwyk@gmail.com</a>`)}
 
   ${rowHTML('Namibia',
-    `Deon van Heerden<br>
+      `Deon van Heerden<br>
      📞 <a href="tel:+27769458969">+27 76 945 8969</a><br>
      ✉️ <a href="mailto:deonvanheerden2@gmail.com">deonvanheerden2@gmail.com</a>`)}
 
   ${rowHTML('Cape #1 & #2',
-    `Marius Marais<br>
+        `Marius Marais<br>
      📞 <a href="tel:+27834454457">+27 83 445 4457</a><br>
      ✉️ <a href="mailto:mariusmarais2008@gmail.com">mariusmarais2008@gmail.com</a>`)}
 
   ${rowHTML('Durban',
-    `Barry Vercueil<br>
+          `Barry Vercueil<br>
      📞 <a href="tel:+27825583544">+27 82 558 3544</a><br>
      ✉️ <a href="mailto:bvercueil@gmail.com">bvercueil@gmail.com</a>`)}
 
   ${rowHTML('Bloemfontein',
-    `Hannes Marais<br>
+            `Hannes Marais<br>
      📞 <a href="tel:+27832257703">+27 83 225 7703</a><br>
      ✉️ <a href="mailto:hannes.marais2007@gmail.com">hannes.marais2007@gmail.com</a>`)}
 
   ${rowHTML('Pretoria #1 & #2',
-    `Andre de Bruyn<br>
+              `Andre de Bruyn<br>
      📞 <a href="tel:+27828280238">+27 82 828 0238</a><br>
      ✉️ <a href="mailto:andredebruyn@gmail.com">andredebruyn@gmail.com</a>`)}
 
   ${rowHTML('Pretoria Zulu',
-    `Dickson Zivambiso<br>
+                `Dickson Zivambiso<br>
      📞 <a href="tel:+263773290895">+263 77 329 0895</a><br>
      ✉️ <a href="mailto:dzivambiso@gmail.com">dzivambiso@gmail.com</a>`)}
 
@@ -176,49 +174,6 @@ function buildEmail(d) {
   </div>
   `;
 }
-/*
-function sendMailjetEmail(toEmail, subject, htmlContent) {
-  const mailjetApiKey = "e83b1e12a836c127f69040c3f812d929";
-  const mailjetSecret = "ee307931eb89ed99261faae711d9b386";
-
-  const url = "https://api.mailjet.com/v3.1/send";
-
-  const payload = {
-    Messages: [
-      {
-        From: {
-          Email: "devfldinfo@gmail.com",
-          Name: "Convention Attendance"
-        },
-        To: [
-          {
-            Email: toEmail,
-            Name: toEmail.split("@")[0]
-          }
-        ],
-        Subject: subject,
-        HTMLPart: htmlContent
-      }
-    ]
-  };
-
-  const options = {
-    method: "post",
-    contentType: "application/json",
-    headers: {
-      Authorization: "Basic " + Utilities.base64Encode(mailjetApiKey + ":" + mailjetSecret)
-    },
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
-  };
-
-  const response = UrlFetchApp.fetch(url, options);
-  Logger.log(response.getContentText());
-}
-
-
-
-*/
 
 function sendPendingConfirmationEmails() {
 
@@ -262,7 +217,7 @@ function sendPendingConfirmationEmails() {
       const row = values[i];
 
       const emailSentStamp = row[19]; // Column T
-      const emailAddress   = row[18]; // Column S
+      const emailAddress = row[18]; // Column S
 
       if (!emailSentStamp && emailAddress) {
 
