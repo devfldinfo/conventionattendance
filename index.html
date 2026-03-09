@@ -96,7 +96,9 @@
       font-size: 15px;
       font-weight: 600;
       margin-bottom: 8px;
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .required {
@@ -304,11 +306,68 @@
       opacity: 0.7;
       pointer-events: none;
     }
+
+
+    /* Help icon */
+
+    .help-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 18px;
+      height: 18px;
+      margin-left: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Help modal */
+
+    #helpModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #helpModal .box {
+      background: white;
+      max-width: 420px;
+      width: 90%;
+      padding: 24px;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    #helpModal h3 {
+      margin-top: 0;
+    }
+
+    #helpModal button {
+      margin-top: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    .fixed-textarea {
+      resize: none;
+    }
   </style>
 </head>
 
 <body>
-  <p class="appVersion">Version 3.4</p>
+  <p class="appVersion">Version 3.6</p>
 
   <!-- FORM -->
   <main id="formView">
@@ -329,93 +388,139 @@
     <div class="content form-body">
 
       <div class="question" id="q-surname">
-        <div class="label">Surname<span class="required">*</span></div>
+        <div class="label">
+          <span>Surname<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('surname')">?</span>
+        </div>
         <input id="surname" type="text" placeholder="Type your surname here">
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-name">
-        <div class="label">Name<span class="required">*</span></div>
+        <div class="label">
+          <span>Name<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('name')">?</span>
+        </div>
         <input id="name" type="text" placeholder="Type your name here">
         <div class="error hidden"></div>
       </div>
 
       <div class="question">
-        <div class="label">Age</div>
+        <div class="label">
+          <span>Age</span>
+          <span class="help-icon" onclick="openHelp('age')">?</span>
+        </div>
         <input id="age" type="text" placeholder="Type your age here">
       </div>
 
       <!-- YES / NO -->
       <div class="question" id="q-sleep">
-        <div class="label">Sleep on grounds?<span class="required">*</span></div>
+        <div class="label">
+          <span>Sleep on grounds?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('sleep')">?</span>
+        </div>
+
+
         <label class="option"><input type="radio" name="sleep" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="sleep" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question">
-        <div class="label">Using a caravan/tent?</div>
+        <div class="label">
+          <span>Using a caravan/tent?</span>
+          <span class="help-icon" onclick="openHelp('caravan')">?</span>
+        </div>
+
+
         <label class="option"><input type="radio" name="caravan" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="caravan" value="No"> No</label>
       </div>
 
       <!-- DAYS -->
       <div class="question" id="q-thu">
-        <div class="label">Attending Thursday?<span class="required">*</span></div>
+        <div class="label">
+          <span>Attending Thursday?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('thu')">?</span>
+        </div>
         <label class="option"><input type="radio" name="thu" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="thu" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-fri">
-        <div class="label">Attending Friday?<span class="required">*</span></div>
+        <div class="label">
+          <span>Attending Friday?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('fri')">?</span>
+        </div>
         <label class="option"><input type="radio" name="fri" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="fri" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-sat">
-        <div class="label">Attending Saturday?<span class="required">*</span></div>
+        <div class="label">
+          <span>Attending Saturday?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('sat')">?</span>
+        </div>
         <label class="option"><input type="radio" name="sat" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="sat" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-sun">
-        <div class="label">Attending Sunday?<span class="required">*</span></div>
+        <div class="label">
+          <span>Attending Sunday?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('sun')">?</span>
+        </div>
         <label class="option"><input type="radio" name="sun" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="sun" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-list">
-        <div class="label">Name on working list?<span class="required">*</span></div>
+        <div class="label">
+          <span>Name on working list?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('list')">?</span>
+        </div>
         <label class="option"><input type="radio" name="list" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="list" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question">
-        <div class="label">Job preferance</div>
+        <div class="label">
+          <span>Job preference</span>
+          <span class="help-icon" onclick="openHelp('job')">?</span>
+        </div>
         <input id="jobPreference" type="text" placeholder="Leave blank if not applicable">
       </div>
 
       <div class="question" id="q-prep">
-        <div class="label">Help on Big preps day?<span class="required">*</span></div>
+        <div class="label">
+          <span>Help on Big preps day?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('prep')">?</span>
+        </div>
         <label class="option"><input type="radio" name="prep" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="prep" value="No"> No</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-gender">
-        <div class="label">Gender<span class="required">*</span></div>
+        <div class="label">
+          <span>Gender<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('gender')">?</span>
+        </div>
         <label class="option"><input type="radio" name="gender" value="Male"> Male</label>
         <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-meals">
-        <div class="label">Staying for evening meals?<span class="required">*</span></div>
+        <div class="label">
+          <span>Staying for evening meals?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('meals')">?</span>
+        </div>
         <label class="option"><input type="radio" name="meals" value="Yes"> Yes</label>
         <label class="option"><input type="radio" name="meals" value="No"> No</label>
         <div class="error hidden"></div>
@@ -423,7 +528,10 @@
 
       <!-- CONVENTION -->
       <div class="question" id="q-convention">
-        <div class="label">Which convention will you attend?<span class="required">*</span></div>
+        <div class="label">
+          <span>Which convention will you attend?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('convention')">?</span>
+        </div>
         <label class="option"><input type="radio" name="convention" value="Namibia"> Namibia (6-7 Dec)</label>
         <label class="option"><input type="radio" name="convention" value="Gqeberha">Gqeberha (4-7 Dec)</label>
         <label class="option"><input type="radio" name="convention" value="Cape #1"> Cape #1 (4-7 Dec)</label>
@@ -437,18 +545,27 @@
       </div>
 
       <div class="question">
-        <div class="label">Special requests</div>
-        <input id="specialRequests" type="text" placeholder="Leave blank if not applicable">
+        <div class="label">
+          <span>Special requests</span>
+          <span class="help-icon" onclick="openHelp('requests')">?</span>
+        </div>
+        <textarea id="specialRequests" rows="4" placeholder="Leave blank if not applicable" class="fixed-textarea"></textarea>
       </div>
 
       <div class="question" id="q-meeting">
-        <div class="label">Your meeting name?<span class="required">*</span></div>
+        <div class="label">
+          <span>Your meeting name?<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('meeting')">?</span>
+        </div>
         <input id="meetingName" type="text" placeholder="eg. Bethanie">
         <div class="error hidden"></div>
       </div>
 
       <div class="question" id="q-email">
-        <div class="label">Email address<span class="required">*</span></div>
+        <div class="label">
+          <span>Email address<span class="required">*</span></span>
+          <span class="help-icon" onclick="openHelp('email')">?</span>
+        </div>
         <input id="email" type="email" placeholder="Type your email address here">
         <div class="error hidden"></div>
       </div>
@@ -491,8 +608,8 @@
     </div>
   </main>
 
-<script>
-  const VALIDATION_ENABLED = true; // ← set to true when ready
+  <script>
+    const VALIDATION_ENABLED = true; // ← set to true when ready
   const el = id => document.getElementById(id);
   const yn = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '';
 
@@ -735,32 +852,6 @@ if (hasError) {
  return;
 }
 
-/*   data = {
-  Surname: formatProperName(el('surname').value),
-  Name: formatProperName(el('name').value),
-  Age: el('age').value.trim(),
-  'Sleeping on grounds': yn('sleep'),
-  'Using a caravan': yn('caravan'),
-  'Attending Thursday': yn('thu'),
-  'Attending Friday': yn('fri'),
-  'Attending Saturday': yn('sat'),
-  'Attending Sunday': yn('sun'),
-  'Name on working list': yn('list'),
-  'Job preferance': formatSentenceCase(el('jobPreference').value),
-  'Saturday preps help': yn('prep'),
-  Gender: yn('gender'),
-  'Staying for evening meals': yn('meals'),
-  Convention: yn('convention'),
-  'Special requests': formatSentenceCase(el('specialRequests').value),
-  Meeting: formatProperName(el('meetingName').value),
-  Email: el('email').value.trim()   // untouched
-};
-
-   el('reviewContent').innerHTML = Object.entries(data)
-     .map(([k,v]) => `<div class="row"><strong>${k}</strong><span>${v || '-'}</span></div>`)
-     .join('');
-
-  //show('reviewView');*/
   buildReviewData();
 }
 
@@ -807,18 +898,10 @@ function submitForm() {
  btn.disabled = true;
  btn2.disabled = true;
 
-// history.pushState(null, null, location.href);
-  //window.onpopstate = function () {
-    //history.go(1);
-  //};
-
  google.script.run
    .withSuccessHandler(() => {
      btn.disabled = false;
      btn2.disabled = false;
-
-     //history.replaceState({ view: 'confirmView' }, '');
-
 
      show('confirmView');
      showResponsibleBrothers();
@@ -826,9 +909,6 @@ function submitForm() {
    .withFailureHandler(err => {
      btn.disabled = false;
      btn2.disabled = false;
-
-    //window.onpopstate = null;
-
 
      alert(err.message);
    })
@@ -840,20 +920,6 @@ function submitForm() {
      el(id).classList.add('hidden')
    );
    el(view).classList.remove('hidden');
-
-   //history.pushState({ view: view }, '');
-
-  // history.pushState(null, null, location.href);
-  //window.onpopstate = function () {
-    //history.go(1);
-  //};
-
-//if (replace) {
-  //  history.replaceState({ view: view }, '');
-  //} else {
-   // history.pushState({ view: view }, '');
- // }
-
 
    window.scrollTo({ top: 0, behavior: 'smooth' });
    
@@ -922,42 +988,124 @@ window.onload = () => {
  el('mainTitle').textContent = `${year} RSA Conventions`;
  el('surname').focus();
 
-// Lock the page in history
-  /*history.replaceState({ noBack: true }, '');
-  history.pushState({ noBack: true }, '');
-
-  window.addEventListener('popstate', function (event) {
-    if (event.state && event.state.noBack) {
-      history.pushState({ noBack: true }, '');
-    }
-  });
-
-*/
-
-//history.pushState(null, null, location.href);
-  //window.addEventListener('popstate', function () {
-    //history.pushState(null, null, location.href);
-  //});
-//history.pushState(null, null, location.href);
-  //window.onpopstate = function () {
-    //history.go(1);
-  //};
-
- //history.replaceState({ view: 'formView' }, '');
-//};
-/*
-window.addEventListener('popstate', function (event) {
-  if (event.state && event.state.view) {
-    ['formView', 'reviewView', 'confirmView'].forEach(id =>
-      el(id).classList.add('hidden')
-    );
-
-    el(event.state.view).classList.remove('hidden');
-    window.scrollTo({ top: 0 });
-  }*/
 };
 
+const helpContent = {
+  surname: {
+    title: "Surname",
+    text: "Enter your family name exactly as you normally use it."
+  },
+
+  name: {
+    title: "Name",
+    text: "Enter only your first name. Do not include middle names."
+  },
+
+  sleep: {
+    title: "Sleep on grounds",
+    text: "Select Yes if you will stay overnight at the convention grounds."
+  },
+
+  caravan: {
+    title: "Caravan or Tent",
+    text: "Select Yes if you will bring a caravan or tent."
+  },
+
+  meals: {
+    title: "Evening meals",
+    text: "Select Yes if you plan to stay for the evening meals at convention."
+  },
+
+  age:{
+  title:"Age",
+  text:"Enter your age in years. Age is used to help assign suitable duties. Technical tasks are generally not assigned to children, and physically demanding tasks are usually not assigned to the elderly."
+},
+
+thu:{
+  title:"Thursday",
+  text:"Select Yes if you will attend the Thursday meetings."
+},
+
+fri:{
+  title:"Friday",
+  text:"Select Yes if you will attend the Friday meetings."
+},
+
+sat:{
+  title:"Saturday",
+  text:"Select Yes if you will attend the Saturday meetings."
+},
+
+sun:{
+  title:"Sunday",
+  text:"Select Yes if you will attend the Sunday meetings."
+},
+
+list:{
+  title:"Working list",
+  text:"Select Yes if you wish to have a convention duty."
+},
+
+job:{
+  title:"Job preference",
+  text:"If you have a preferred duty, enter it here. For example: Wash-Up, Cloakrooms, Pantry, etc."
+},
+
+prep:{
+  title:"Big preps day",
+  text:"Select Yes if you are able to help on the big preparation day before the convention. This will be the Saturday before the start of convention."
+},
+
+gender:{
+  title:"Gender",
+  text:"Used for accommodation and working arrangements."
+},
+
+convention:{
+  title:"Convention",
+  text:"Select the convention you plan to attend. If you wish to attend more than one convention, please fill in a seperate form."
+},
+
+requests:{
+  title:"Special requests",
+  text:"Add any information that may help those responsible for convention. For example: Resting bed, Special needs in meeting hall, Special sleeping arrangements."
+},
+
+meeting:{
+  title:"Meeting name",
+  text:"Enter the name of the meeting you attend. For example: Bethanie, Kuilsriver, Grassy Park. Ask the worker in your field if you are not sure."
+},
+
+email:{
+  title:"Email address",
+  text:"A confirmation email will be sent to this address."
+}
+
+};
+
+function openHelp(key){
+  const info = helpContent[key];
+  if(!info) return;
+
+  document.getElementById("helpTitle").textContent = info.title;
+  document.getElementById("helpText").textContent = info.text;
+  document.getElementById("helpModal").style.display = "flex";
+}
+
+function closeHelp(){
+  document.getElementById("helpModal").style.display = "none";
+}
+
   </script>
+
+  <div id="helpModal">
+    <div class="box">
+      <h3 id="helpTitle"></h3>
+      <p id="helpText"></p>
+      <button onclick="closeHelp()">Close</button>
+    </div>
+  </div>
+
 
 </body>
 
