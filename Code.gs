@@ -1,6 +1,6 @@
 
 const SHEET_ID = '1OukBzLWlDurzU5uvrEmaNXpwBoIc9jbR6RmeIg2M2TI';
-const SHEET_NAME = 'Sheet1';
+const SHEET_NAME = 'Feedback';
 
 function stressTest() {
   for (let i = 0; i < 50; i++) {
