@@ -378,7 +378,7 @@
 </head>
 
 <body>
-  <p class="appVersion">Version 3.7</p>
+  <p class="appVersion">Version 3.8</p>
 
   <!-- FORM -->
   <main id="formView">
@@ -888,7 +888,7 @@ function buildReviewData() {
   'Attending Saturday': yn('sat'),
   'Attending Sunday': yn('sun'),
   'Name on working list': yn('list'),
-  'Job preferance': formatSentenceCase(el('jobPreference').value),
+  'Job preference': formatSentenceCase(el('jobPreference').value),
   'Saturday preps help': yn('prep'),
   Gender: yn('gender'),
   'Staying for evening meals': yn('meals'),
@@ -913,9 +913,6 @@ function submitForm() {
  const btn = el('submitBtn');
  const btn2 = el('backBtn');
  
- const email = data.email;
-
-
  btn.disabled = true;
  btn2.disabled = true;
 
@@ -984,9 +981,6 @@ function startNewForm() {
   if (savedSun)
     document.querySelector(`input[name="sun"][value="${savedSun}"]`).checked = true;
 
-  if (savedSleep)
-    document.querySelector(`input[name="sleep"][value="${savedSleep}"]`).checked = true;
-
   if (savedMeals)
     document.querySelector(`input[name="meals"][value="${savedMeals}"]`).checked = true;
 
@@ -1008,6 +1002,21 @@ window.onload = () => {
  const year = new Date().getFullYear();
  el('mainTitle').textContent = `${year} RSA Conventions`;
  el('surname').focus();
+
+document.querySelectorAll("input, textarea").forEach(elm => {
+  elm.addEventListener("input", () => {
+    const q = elm.closest(".question");
+    if (!q) return;
+
+    q.classList.remove("invalid");
+    const err = q.querySelector(".error");
+    if (err) {
+      err.classList.add("hidden");
+      err.textContent = "";
+    }
+  });
+});
+
 };
 
 const helpContent = {
