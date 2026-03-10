@@ -1,14 +1,16 @@
+//Version 3.8
+
 const SHEET_ID = '1OukBzLWlDurzU5uvrEmaNXpwBoIc9jbR6RmeIg2M2TI';
 const SHEET_NAME = 'Feedback';
 
 function stressTest() {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 1; i++) {
     submitData({
       Surname: "Test",
       Name: "User " + i,
       Age: "30",
       Meeting: "Test Meeting",
-      Email: "Mariusmarais2008@gmai.com"
+      Email: "Mariusmarais2008@gmail.com"
     });
   }
 }
@@ -39,7 +41,7 @@ function submitData(data) {
       data['Attending Saturday'] || '',
       data['Attending Sunday'] || '',
       data['Name on working list'] || '',
-      data['Job preferance'] || '',
+      data['Job preference'] || '',
       data['Saturday preps help'] || '',
       data['Gender'] || '',
       data['Staying for evening meals'] || '',
@@ -102,7 +104,7 @@ function buildEmail(d) {
             ${row('Attending Saturday', d['Attending Saturday'])}
             ${row('Attending Sunday', d['Attending Sunday'])}
             ${row('Name on working list', d['Name on working list'])}
-            ${row('Job preferance', d['Job preferance'])}
+            ${row('Job preference', d['Job preference'])}
             ${row('Saturday preps help', d['Saturday preps help'])}
             ${row('Gender', d['Gender'])}
             ${row('Staying for evening meals', d['Staying for evening meals'])}
@@ -118,38 +120,38 @@ function buildEmail(d) {
 <table style="border-collapse:collapse;width:100%;margin-top:10px;">
 
   ${rowHTML('Gqeberha',
-    `Julian van Wyk<br>
-     📞 <a href="tel:+27723627604">+27 72 362 7604</a><br>
+      `Julian van Wyk<br>
+      ${whatsapp('27723627604','+27 72 362 7604')}<br>
      ✉️ <a href="mailto:julianvanwyk@gmail.com">julianvanwyk@gmail.com</a>`)}
 
   ${rowHTML('Namibia',
       `Deon van Heerden<br>
-     📞 <a href="tel:+27769458969">+27 76 945 8969</a><br>
+      ${whatsapp('27769458969','+27 76 945 8969')}<br>
      ✉️ <a href="mailto:deonvanheerden2@gmail.com">deonvanheerden2@gmail.com</a>`)}
 
   ${rowHTML('Cape #1 & #2',
         `Marius Marais<br>
-     📞 <a href="tel:+27834454457">+27 83 445 4457</a><br>
+       ${whatsapp('27834454457','+27 83 445 4457')}<br>
      ✉️ <a href="mailto:mariusmarais2008@gmail.com">mariusmarais2008@gmail.com</a>`)}
 
   ${rowHTML('Durban',
-          `Barry Vercueil<br>
-     📞 <a href="tel:+27825583544">+27 82 558 3544</a><br>
+       `Barry Vercueil<br>
+       ${whatsapp('27825583544','+27 82 558 3544')}<br>
      ✉️ <a href="mailto:bvercueil@gmail.com">bvercueil@gmail.com</a>`)}
 
   ${rowHTML('Bloemfontein',
-            `Hannes Marais<br>
-     📞 <a href="tel:+27832257703">+27 83 225 7703</a><br>
+      `Hannes Marais<br>
+       ${whatsapp('27832257703','+27 83 225 7703')}<br>
      ✉️ <a href="mailto:hannes.marais2007@gmail.com">hannes.marais2007@gmail.com</a>`)}
 
   ${rowHTML('Pretoria #1 & #2',
-              `Andre de Bruyn<br>
-     📞 <a href="tel:+27828280238">+27 82 828 0238</a><br>
+      `Andre de Bruyn<br>
+       ${whatsapp('27828280238','+27 82 828 0238')}<br>
      ✉️ <a href="mailto:andredebruyn@gmail.com">andredebruyn@gmail.com</a>`)}
 
   ${rowHTML('Pretoria Zulu',
-                `Dickson Zivambiso<br>
-     📞 <a href="tel:+263773290895">+263 77 329 0895</a><br>
+       `Dickson Zivambiso<br>
+       ${whatsapp('263773290895','+263 77 329 0895')}<br>
      ✉️ <a href="mailto:dzivambiso@gmail.com">dzivambiso@gmail.com</a>`)}
 
 </table>
@@ -232,7 +234,7 @@ function sendPendingConfirmationEmails() {
           'Attending Saturday': row[8],
           'Attending Sunday': row[9],
           'Name on working list': row[10],
-          'Job preferance': row[11],
+          'Job preference': row[11],
           'Saturday preps help': row[12],
           'Gender': row[13],
           'Staying for evening meals': row[14],
@@ -279,4 +281,13 @@ function sendPendingConfirmationEmails() {
   } finally {
     lock.releaseLock();
   }
+}
+
+function whatsapp(phone, display){
+  return `<a href="https://wa.me/${phone}" style="text-decoration:none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/24px-WhatsApp.svg.png"
+         width="16"
+         style="vertical-align:middle;margin-right:4px;">
+    ${display}
+  </a>`;
 }
