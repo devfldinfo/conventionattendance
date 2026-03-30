@@ -1,4 +1,4 @@
-//Version 3.8
+//Version 3.9
 
 const SHEET_ID = '1OukBzLWlDurzU5uvrEmaNXpwBoIc9jbR6RmeIg2M2TI';
 const SHEET_NAME = 'Feedback';
@@ -17,7 +17,7 @@ function stressTest() {
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('index')
-    .setTitle('Convention Registration').addMetaTag('viewport', 'width=device-width, initial-scale=1');
+    .setTitle('Convention Attendance').addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 function submitData(data) {
@@ -76,8 +76,8 @@ function buildEmail(d) {
 
   const rowHTML = (label, value) =>
     `<tr>
-     <td style="padding:8px;border-bottom:1px solid #ddd;"><strong>${esc(label)}</strong></td>
-     <td style="padding:8px;border-bottom:1px solid #ddd;">${value}</td>
+     <td style="padding:1px;border-bottom:1px solid #ddd;"><strong>${esc(label)}</strong></td>
+     <td style="padding:1px;border-bottom:1px solid #ddd;">${value}</td>
     </tr>`;
 
   return `
@@ -86,7 +86,7 @@ function buildEmail(d) {
       <tr>
         <td style="padding:20px;">
           <h2 style="margin-top:0;">
-            Thank you for completing your convention attendance form.
+            Thank you for completing your 2026/7 convention attendance form.
           </h2>
 
           <p>
@@ -119,37 +119,37 @@ function buildEmail(d) {
 
 <table style="border-collapse:collapse;width:100%;margin-top:10px;">
 
-  ${rowHTML('Gqeberha',
-      `Julian van Wyk<br>
-      ${whatsapp('27723627604','+27 72 362 7604')}<br>
-     ✉️ <a href="mailto:julianvanwyk@gmail.com">julianvanwyk@gmail.com</a>`)}
-
-  ${rowHTML('Namibia',
+  ${rowHTML('Namibia (28-29 Nov)',
       `Deon van Heerden<br>
       ${whatsapp('27769458969','+27 76 945 8969')}<br>
      ✉️ <a href="mailto:deonvanheerden2@gmail.com">deonvanheerden2@gmail.com</a>`)}
 
-  ${rowHTML('Cape #1 & #2',
+  ${rowHTML('Gqeberha (3-6 Dec)',
+      `Julian van Wyk<br>
+      ${whatsapp('27723627604','+27 72 362 7604')}<br>
+     ✉️ <a href="mailto:julianvanwyk@gmail.com">julianvanwyk@gmail.com</a>`)}
+
+  ${rowHTML('Cape #1 (3-6 Dec) & #2 (10-13 Dec)',
         `Marius Marais<br>
        ${whatsapp('27834454457','+27 83 445 4457')}<br>
      ✉️ <a href="mailto:mariusmarais2008@gmail.com">mariusmarais2008@gmail.com</a>`)}
 
-  ${rowHTML('Durban',
+  ${rowHTML('Durban (10-13 Dec)',
        `Barry Vercueil<br>
        ${whatsapp('27825583544','+27 82 558 3544')}<br>
      ✉️ <a href="mailto:bvercueil@gmail.com">bvercueil@gmail.com</a>`)}
 
-  ${rowHTML('Bloemfontein',
-      `Hannes Marais<br>
-       ${whatsapp('27832257703','+27 83 225 7703')}<br>
-     ✉️ <a href="mailto:hannes.marais2007@gmail.com">hannes.marais2007@gmail.com</a>`)}
-
-  ${rowHTML('Pretoria #1 & #2',
+  ${rowHTML('Pta #1 (17-20 Dec) & #2 (24-27 Dec)',
       `Andre de Bruyn<br>
        ${whatsapp('27828280238','+27 82 828 0238')}<br>
      ✉️ <a href="mailto:andredebruyn@gmail.com">andredebruyn@gmail.com</a>`)}
 
-  ${rowHTML('Pretoria Zulu',
+  ${rowHTML('Bloemfontein (24-27 Dec)',
+      `Hannes Marais<br>
+       ${whatsapp('27832257703','+27 83 225 7703')}<br>
+     ✉️ <a href="mailto:hannes.marais2007@gmail.com">hannes.marais2007@gmail.com</a>`)}
+
+  ${rowHTML('Pta Zulu (8-10 Jan)',
        `Dickson Zivambiso<br>
        ${whatsapp('263773290895','+263 77 329 0895')}<br>
      ✉️ <a href="mailto:dzivambiso@gmail.com">dzivambiso@gmail.com</a>`)}
