@@ -378,7 +378,7 @@
 </head>
 
 <body>
-  <p class="appVersion">Version 3.8</p>
+  <p class="appVersion">Version 4.0</p>
 
   <!-- FORM -->
   <main id="formView">
@@ -543,15 +543,13 @@
           <span>Which convention will you attend?<span class="required">*</span></span>
           <span class="help-icon" onclick="openHelp('convention')">?</span>
         </div>
-        <label class="option"><input type="radio" name="convention" value="Namibia"> Namibia (6-7 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Gqeberha">Gqeberha (4-7 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Cape #1"> Cape #1 (4-7 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Cape #2">Cape #2 (11-14 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Durban">Durban (11-14 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Pretoria #1"> Pretoria #1 (18-21 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Pretoria #2"> Pretoria #2 (25-28 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Bloemfontein">Bloemfontein (25-28 Dec)</label>
-        <label class="option"><input type="radio" name="convention" value="Pretoria Zulu">Pretoria Zulu (9-11 Jan)</label>
+        <label class="option"><input type="radio" name="convention" value="Gqeberha">Gqeberha (3-6 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Cape #1"> Cape #1 (3-6 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Cape #2">Cape #2 (10-13 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Durban">Durban (10-13 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Pretoria #1"> Pretoria #1 (17-20 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Pretoria #2"> Pretoria #2 (24-27 Dec)</label>
+        <label class="option"><input type="radio" name="convention" value="Bloemfontein">Bloemfontein (24-27 Dec)</label>
         <div class="error hidden"></div>
       </div>
 
@@ -631,50 +629,50 @@ function showResponsibleBrothers() {
   const container = el("responsibleContact");
 
   const brothers = [
-    {
-      convention: "Gqeberha",
-      name: "Julian van Wyk",
-      phone: "27723627604",
-      display: "+27 72 362 7604",
-      email: "julianvanwyk@gmail.com"
-    },
-    {
-      convention: "Namibia",
+     {
+      convention: "Namibia (28-29 Nov)",
       name: "Deon van Heerden",
       phone: "27769458969",
       display: "+27 76 945 8969",
       email: "deonvanheerden2@gmail.com"
     },
     {
-      convention: "Cape #1 & #2",
+      convention: "Gqeberha (3-6 Dec)",
+      name: "Julian van Wyk",
+      phone: "27723627604",
+      display: "+27 72 362 7604",
+      email: "julianvanwyk@gmail.com"
+    },
+    {
+      convention: "Cape #1 (3-6 Dec) & #2 (10-13 Dec)",
       name: "Marius Marais",
       phone: "27834454457",
       display: "+27 83 445 4457",
       email: "mariusmarais2008@gmail.com"
     },
     {
-      convention: "Durban",
+      convention: "Durban (10-13 Dec)",
       name: "Barry Vercueil",
       phone: "27825583544",
       display: "+27 82 558 3544",
       email: "bvercueil@gmail.com"
     },
     {
-      convention: "Bloemfontein",
-      name: "Hannes Marais",
-      phone: "27832257703",
-      display: "+27 83 225 7703",
-      email: "hannes.marais2007@gmail.com"
-    },
-    {
-      convention: "Pretoria #1 & #2",
+      convention: "Pretoria #1 (17-20 Dec) & #2 (24-27 Dec)",
       name: "Andre de Bruyn",
       phone: "27828280238",
       display: "+27 82 828 0238",
       email: "andredebruyn@gmail.com"
     },
     {
-      convention: "Pretoria Zulu",
+      convention: "Bloemfontein (24-27 Dec)",
+      name: "Hannes Marais",
+      phone: "27832257703",
+      display: "+27 83 225 7703",
+      email: "hannes.marais2007@gmail.com"
+    },
+    {
+      convention: "Pretoria Zulu (8-10 Jan)",
       name: "Dickson Zivambiso",
       phone: "263773290895",
       display: "+263 77 329 0895",
@@ -992,7 +990,7 @@ function startNewForm() {
 }
 
 function clearAllInputs() {
- document.querySelectorAll('input').forEach(input => {
+ document.querySelectorAll('input, textarea').forEach(input => {
    if (input.type === 'radio') input.checked = false;
    else input.value = '';
  });
